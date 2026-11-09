@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>Weather App</title>
+</head>
+
+<body class="min-h-screen bg-slate-100 text-slate-800">
+
+    <header class="bg-blue-400 p-4 text-center text-white">
+        <h1 class="text-2xl font-blod">Weather App</h1>
+        <p class="mt-1 text-sm">Consultez la meteo de votre ville</p>
+    </header>
+
+    <main class="mx-auto flex min-h-[600px] max-w-xl flex-col items-center justify-center px-4">
+        <section class="w-full rounded-xl bg-white p-5 shadow-md">
+            <h2 class="mb-4 text-lg font-semibold">Rechercher une ville</h2>
+
+            <form id="form-search" class="flex flex-col gap-3 sm:flex-row">
+                <input type="text" id="input-ville" placeholder="Exemple: Taza, Fes, Casablanca, ..."
+                    class="w-full rounded-lg border border-slate-300 p-3 outline-none focus:border-blue-500">
+                <button type="submit" id="btn-search"
+                    class="rounded-lg bg-blue-600 px-5 py-3 font-medium text-white hover:bg-blue-700">
+                    Rechercher
+                </button>
+            </form>
+
+            <!-- partie loading... -->
+            <p id="msg-loading" class="mt-3 hidden text-center text-blue-600">Chargemenet</p>
+            <!-- msg erreur -->
+            <p id="msg-erreur" class="mt-3 hidden text-center text-red-500"></p>
+
+
+        </section>
+        <!-- carte  meteo-->
+        <section id="carte-meteo" class="hidden">
+
+            <h2 id="ville-name"></h2>
+
+            <p id="meteo-icone"></p>
+
+            <p id="temperature"></p>
+
+            <p id="meteo-description"></p>
+
+            <div>
+                <div>
+                    <p>Humidité</p>
+                    <p id="humidite"></p>
+                </div>
+
+                <div>
+                    <p>Vitesse du vent</p>
+                    <p id="vitesse-vent"></p>
+                </div>
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <script type="module" src="js/scripts.js"></script>
+</body>
+
+</html>
