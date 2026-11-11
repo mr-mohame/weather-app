@@ -48,6 +48,7 @@ search_form.addEventListener("submit", async function (event) {
         afficherMeteo(villeTrouve.name, meteo);
         
     }catch(erreur){
+        console.error(erreur);
         msg_erreur.textContent = "une erreur ";
         msg_erreur.classList.remove("hidden");
 
@@ -65,34 +66,63 @@ function afficherMeteo(ville, meteo) {
 
     const weather = WEATHER_CODES[current.weather_code];
 
-    console.log(weather);
-    
+    // console.log(weather);
+    // cree la carte
+    const carte = document.createElement("div");
+    carte.classList.add("w-full", "max-w-2xl", "mx-auto", "bg-gradient-to-br", "from-sky-400", "to-blue-600", "p-6", "rounded-2xl", "shadow-md", "text-center");
 
-    // crees les element 
-    const icone = document.createElement("span");
-    const nom = document.createElement("span");
-    const temp = document.createElement("span");
-    const hum = document.createElement("span");
-    const vent = document.createElement("span");
-    const description = document.createElement("span");
+    const titer = document.createElement("h2");
+    titer.classList.add("text-2xl", "font-bold", "mb-4", "tracking-wider");
+    titer.textContent = ville + " Maroc";
 
-    // ajouter les donne 
-    
-    nom.textContent = ville;
+    const icone = document.createElement("p");
+    icone.classList.add("text-5xl")
     icone.textContent = weather.icon;
+
+    const temp = document.createElement("p");
+    temp.classList.add("text-4xl", "font-bold", "text-yellow-300")
+    temp.textContent = current.temperature_2m + " °C";
+
+    const description = document.createElement("p");
+    description.classList.add("text-xl", "mb-5")
     description.textContent = weather.label;
-    temp.textContent = `${current.temperature_2m} °C`;
-    hum.textContent = `${current.relative_humidity_2m} %`;
-    vent.textContent = `${current.wind_speed_10m} km/h`;
 
-    // ajouter les elemens dans le HTML
-    ville_name.replaceChildren(nom); 
-    meteo_icone.replaceChildren(icone);
-    temperature.replaceChildren(temp);
-    meteo_description.replaceChildren(description);
-    humidite.replaceChildren(hum);
-    vitesse_vent.replaceChildren(vent);
+    const informatins = document.createElement("div");
+    informatins.classList.add("flex", "gap-4", "w-full", "mt-8")
 
-    // Afficher la carte
+    const hum_block = document.createElement("div");
+    hum_block.classList.add("flex-1", "basis-0", "h-40", "flex", "flex-col", "items-center", "justify-center", "border", "border-blue-100", "rounded-xl", "p-3", "text-center")
+
+    const hum_titre = document.createElement("p");
+    hum_titre.classList.add("m-1", "font-bold", "text-[25px]")
+    hum_titre.textContent = "💧 Humidite";
+
+    const hum_Valeur = document.createElement("p");
+    hum_Valeur.classList.add("m-1", "font-bold", "text-[18px]")
+    hum_Valeur.textContent = current.relative_humidity_2m + " %";
+
+    hum_block.append(hum_titre, hum_Valeur);
+
+    const vent_block = document.createElement("div");
+    vent_block.classList.add("flex-1", "basis-0", "h-40", "flex", "flex-col", "items-center", "justify-center", "border", "border-blue-100", "rounded-xl", "p-3", "text-center")
+
+    const vent_titre = document.createElement("p");
+    vent_titre.classList.add("m-1", "font-bold", "text-[25px]")
+    vent_titre.textContent = "💨 Vitess du vente";
+
+    const vent_valeur = document.createElement("p");
+    vent_valeur.classList.add("m-1", "font-bold", "text-[18px]")
+    vent_valeur.textContent = current.wind_speed_10m + " km/h";
+    
+    vent_block.append(vent_titre, vent_valeur);
+    
+    
+    informatins.append(hum_block, vent_block);
+    carte.append(titer, icone, temp, description, informatins);
+    carte_meteo.replaceChildren(carte);
+    
+     // Afficher la carte
     carte_meteo.classList.remove("hidden");
 }
+    
+   
