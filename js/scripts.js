@@ -1,4 +1,4 @@
-import { rechercherVille, obtenirMeteo } from "./api.js";
+import { rechercherVille, obtenirMeteo, obtenirPrevisions } from "./api.js";
 import { WEATHER_CODES } from "./utils.js";
 
 
@@ -45,16 +45,22 @@ search_form.addEventListener("submit", async function (event) {
         const longitude = villeTrouve.longitude;
         // recupere la mteo
         const meteo = await obtenirMeteo(latitude, longitude);
+
+        // recupere la previsions daily
+        const previsions = await obtenirPrevisions(latitude, longitude);
+        // console.log(previsions.daily);
+
         afficherMeteo(villeTrouve.name, meteo);
-        
-    }catch(erreur){
+        afficherPrevisions(previsions);
+
+    } catch (erreur) {
         console.error(erreur);
         msg_erreur.textContent = "une erreur ";
         msg_erreur.classList.remove("hidden");
 
-    }finally {
+    } finally {
         msg_loading.classList.add("hidden");
-        
+
     }
 
 })
@@ -113,16 +119,68 @@ function afficherMeteo(ville, meteo) {
     const vent_valeur = document.createElement("p");
     vent_valeur.classList.add("m-1", "font-bold", "text-[18px]")
     vent_valeur.textContent = current.wind_speed_10m + " km/h";
-    
+
     vent_block.append(vent_titre, vent_valeur);
-    
-    
+
+
     informatins.append(hum_block, vent_block);
     carte.append(titer, icone, temp, description, informatins);
     carte_meteo.replaceChildren(carte);
-    
-     // Afficher la carte
+
+    // Afficher la carte
     carte_meteo.classList.remove("hidden");
 }
-    
+
+
+function afficherPrevisions(previsions) {
+    const daily = previsions.daily;
+    const liste = document.getElementById("liste-previsions");
    
+
+
+    liste.replaceChildren();
+
+    for (let i = 0; i < daily.time.length; i++) {
+        
+        const weather = WEATHER_CODES[daily.weather_code[i]];
+
+
+        // 1. creer la carte
+        const carte = document.createElement("div");
+        carte.classList.add("bg-white", "rounded-2xl", "p-5", "flex", "flex-col", "items-center", "justify-between", "w-48", "h-50", "shrink-0", "text-center", "border", "border-black", "hover:shadow-xl")
+
+        const jour = document.createElement("span");
+        const date = new Date(daily.time[i] + "T12:00:00");
+        jour.classList.add("text-sm", "font-semibold", "text-gray-500", "uppercase", "tracking-wider");
+        jour.textContent = date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric"});
+
+        const icone = document.createElement("span");
+        icone.classList.add("text-5xl")
+        icone.textContent = weather.icon;
+
+        const description = document.createElement("span");
+        description.classList.add("text-xs", "text-gray-400", "mb-2")
+        description.textContent = weather.label;
+
+        const temperatures = document.createElement("div");
+        temperatures.classList.add("flex", "items-center", "justify-center", "gap-2")
+
+        const tempMax = document.createElement("span");
+        tempMax.classList.add("text-lg", "font-bold", "text-gray-800")
+        tempMax.textContent = daily.temperature_2m_max[i] ?? "Donnée indisponible";
+
+        const tempMin = document.createElement("span");
+        tempMin.classList.add("text-sm", "text-gray-400");
+        tempMin.textContent = daily.temperature_2m_max[i] ?? "Donnée indisponible";
+
+        temperatures.appendChild(tempMax);
+        temperatures.appendChild(tempMin);
+        carte.appendChild(jour);
+        carte.appendChild(icone);
+        carte.appendChild(description);
+        carte.appendChild(temperatures);
+
+        liste.appendChild(carte);
+    }
+    liste.classList.remove("hidden");
+}
