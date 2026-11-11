@@ -9,18 +9,18 @@
     <title>Weather App</title>
 </head>
 
-<body class="min-h-screen bg-slate-100 text-slate-800">
+<body class="m-0 p-0 box-border min-h-screen flex flex-col bg-slate-100 text-slate-800">
 
-    <header class="bg-blue-400 p-4 text-center text-white">
-        <h1 class="text-2xl font-blod">Weather App</h1>
+    <header class="bg-gradient-to-br from-sky-400 to-blue-600 p-4 text-center text-white">
+        <h1 class="text-2xl font-bold tracking-widest">Weather App</h1>
         <p class="mt-1 text-sm">Consultez la meteo de votre ville</p>
     </header>
 
-    <main class="mx-auto flex min-h-[600px] max-w-xl flex-col items-center justify-center px-4">
-        <section class="w-full rounded-xl bg-white p-5 shadow-md">
-            <h2 class="mb-4 text-lg font-semibold">Rechercher une ville</h2>
+    <main class="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-center gap-6 px-4 py-8">
+        <section class="w-full max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow-md">
+            <h2 class="mx-6 text-lg font-semibold">Rechercher une ville</h2>
 
-            <form id="form-search" class="flex flex-col gap-3 sm:flex-row">
+            <form id="form-search" class="flex gap-2 w-full bg-white p-6 ">
                 <input type="text" id="input-ville" placeholder="Exemple: Taza, Fes, Casablanca, ..."
                     class="w-full rounded-lg border border-slate-300 p-3 outline-none focus:border-blue-500">
                 <button type="submit" id="btn-search"
@@ -37,7 +37,7 @@
 
         </section>
         <!-- carte  meteo-->
-        <section id="carte-meteo" class="hidden">
+        <section id="carte-meteo" class="hidden w-full">
 
             <h2 id="ville-name"></h2>
 
@@ -63,6 +63,19 @@
 
 
     </main>
+    <footer class="mt-auto bg-gradient-to-br from-sky-400 to-blue-600 p-5 text-white">
+        <div class="text-center">
+        <p class="font-bold text-lg">Weather App</p>
+        <p class="text-sm text-white mt-2">
+            Les informations météo en temps réel.
+        </p>
+        <p class="text-xs text-white mt-3">
+            © 2026 Mohamed Lamssiah | YouCode. Tous droits réservés.
+        </p>
+    </div>
+
+
+    </footer>
     
     <script type="module" src="js/scripts.js"></script>
 </body>
