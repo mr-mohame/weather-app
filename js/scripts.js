@@ -15,6 +15,7 @@ const temperature = document.getElementById("temperature");
 const meteo_description = document.getElementById("meteo-description");
 const humidite = document.getElementById("humidite");
 const vitesse_vent = document.getElementById("vitesse-vent");
+const liste_previsions = document.getElementById("liste-previsions");
 // ajouter la btn reessayer
 const btn_reessayer = document.getElementById("btn-reessayer")
 
@@ -35,6 +36,8 @@ search_form.addEventListener("submit", async function (event) {
         alert("saisir une ville");
         return;
     }
+    carte_meteo.classList.add("hidden");
+    liste_previsions.classList.add("hidden");
     //pour enregistrer derniere ville recherchee
     derniereVille = ville;
     // masquer le msg de chargemment
