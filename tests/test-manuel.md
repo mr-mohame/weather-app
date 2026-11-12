@@ -25,7 +25,7 @@ Ce document présente les tests manuels réalisés pour vérifier le bon fonctio
 
 **Capture d'écran :**
 
-![Recherche réussie](screenshots/test-01-recherche.png)
+![Recherche réussie](../screenshots/test-01-recherche.png)
 
 ---
 
@@ -42,7 +42,7 @@ Ce document présente les tests manuels réalisés pour vérifier le bon fonctio
 
 **Capture d'écran :**
 
-![Ville introuvable](screenshots/test-02-ville-introuvable.png)
+![Ville introuvable](../screenshots/test-02-ville-introuvable.png)
 
 ---
 
@@ -59,7 +59,7 @@ Ce document présente les tests manuels réalisés pour vérifier le bon fonctio
 
 **Capture d'écran :**
 
-![Prévisions météo](screenshots/test-04-previsions.png)
+![Prévisions météo](../screenshots/test-04-previsions.png)
 
 ---
 
@@ -76,7 +76,7 @@ Ce document présente les tests manuels réalisés pour vérifier le bon fonctio
 
 **Capture d'écran :**
 
-![Erreur réseau](screenshots/test-05-erreur-reseau.png)
+![Erreur réseau](../screenshots/test-05-erreur-reseau.png)
 
 ## 4. Conclusion
 
