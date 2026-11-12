@@ -1,11 +1,12 @@
 import { rechercherVille, obtenirMeteo, obtenirPrevisions } from "./api.js";
-import { WEATHER_CODES } from "./utils.js";
+import { WEATHER_CODES, gestionErreur } from "./utils.js";
 
 
 const search_form = document.getElementById("form-search");
 const input_ville = document.getElementById("input-ville");
 const msg_loading = document.getElementById("msg-loading");
 const msg_erreur = document.getElementById("msg-erreur");
+// console.log(msg_erreur);
 const btn_search = document.getElementById("btn-search");
 const carte_meteo = document.getElementById("carte-meteo");
 const ville_name = document.getElementById("ville-name");
@@ -14,19 +15,29 @@ const temperature = document.getElementById("temperature");
 const meteo_description = document.getElementById("meteo-description");
 const humidite = document.getElementById("humidite");
 const vitesse_vent = document.getElementById("vitesse-vent");
+// ajouter la btn reessayer
+const btn_reessayer = document.getElementById("btn-reessayer")
 
 // console.log(search_form, input_ville, msg_loading, msg_erreur, btn_search, carte_meteo, ville_name, meteo_icone, temperature, meteo_description, humidite, vitesse_vent);
-
+// pour enregister la dernier recherche
+let derniereVille = "";
+//
 search_form.addEventListener("submit", async function (event) {
     event.preventDefault();
     const ville = input_ville.value.trim();
+
+    // masquer le msg erreur
     msg_erreur.classList.add("hidden");
+    // masquer le btn reessayer
+    btn_reessayer.classList.add("hidden");
 
     if (ville === "") {
         alert("saisir une ville");
         return;
     }
-
+    //pour enregistrer derniere ville recherchee
+    derniereVille = ville;
+    // masquer le msg de chargemment
     msg_loading.classList.remove("hidden");
     try {
         // appel de fonction afficher 
@@ -43,27 +54,39 @@ search_form.addEventListener("submit", async function (event) {
         //recupere les coordonnees
         const latitude = villeTrouve.latitude;
         const longitude = villeTrouve.longitude;
-        // recupere la mteo
+        // recupere la meteo
         const meteo = await obtenirMeteo(latitude, longitude);
 
         // recupere la previsions daily
         const previsions = await obtenirPrevisions(latitude, longitude);
         // console.log(previsions.daily);
-
+        
+        // appel function (api)
         afficherMeteo(villeTrouve.name, meteo);
         afficherPrevisions(previsions);
 
     } catch (erreur) {
         console.error(erreur);
-        msg_erreur.textContent = "une erreur ";
-        msg_erreur.classList.remove("hidden");
+        // console.log("dans catch");
+         
+        // appel function (utils)
+        gestionErreur(erreur, msg_erreur);
+
+        btn_reessayer.classList.remove("hidden");
+        console.log(btn_reessayer);
+
 
     } finally {
         msg_loading.classList.add("hidden");
+       
 
     }
-
-})
+});
+// pour affiche le btn ressaayer 
+btn_reessayer.addEventListener("click", function () {
+    input_ville.value = derniereVille;
+    btn_search.click();
+});
 
 //function affiche les section carte 
 function afficherMeteo(ville, meteo) {
@@ -131,17 +154,15 @@ function afficherMeteo(ville, meteo) {
     carte_meteo.classList.remove("hidden");
 }
 
-
+// function pour ajouter des carte  pour les prochains 5 jours 
 function afficherPrevisions(previsions) {
     const daily = previsions.daily;
     const liste = document.getElementById("liste-previsions");
-   
-
 
     liste.replaceChildren();
 
     for (let i = 0; i < daily.time.length; i++) {
-        
+
         const weather = WEATHER_CODES[daily.weather_code[i]];
 
 
@@ -152,7 +173,7 @@ function afficherPrevisions(previsions) {
         const jour = document.createElement("span");
         const date = new Date(daily.time[i] + "T12:00:00");
         jour.classList.add("text-sm", "font-semibold", "text-gray-500", "uppercase", "tracking-wider");
-        jour.textContent = date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric"});
+        jour.textContent = date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 
         const icone = document.createElement("span");
         icone.classList.add("text-5xl")
@@ -184,3 +205,10 @@ function afficherPrevisions(previsions) {
     }
     liste.classList.remove("hidden");
 }
+
+
+// teste HTTP 429
+
+// const erreurTest = new Error("Erreur de test");
+// erreurTest.status = 429;
+// gestionErreur(erreurTest, msg_erreur);
