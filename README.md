@@ -171,6 +171,8 @@ Pour les conditions d'utilisation et les éventuelles limites de requêtes, cons
 
 Projet réalisé dans le cadre de mon apprentissage du développement Front-End, avec JavaScript et la consommation d'API.
 
+## Démo en ligne
+Consulter l'application météo : [Weather App – Démo](https://mr-mohame.github.io/weather-app/)
 **GitHub :** [mr-mohame](https://github.com/mr-mohame)
 
 ---
