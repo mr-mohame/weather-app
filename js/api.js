@@ -3,7 +3,7 @@
 export async function rechercherVille(ville) {
     //encodeURIComponent : cest tu une function bien definie en js
     //  qui transforme le text et utilise dans une url
-    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(ville)}&count=10&language=fr&format=json&countryCode=MA`;
+    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(ville)}&count=10&language=fr&format=json`;
     // fetch
     const response = await fetch(url);   // pour envoyer la requete
     // on verifie cest ces reponse http 
@@ -19,7 +19,7 @@ export async function rechercherVille(ville) {
 
 // cette function recevoir les cordonne et les informations meteo
 export async function obtenirMeteo(latitude, longitude) {
-    const URL = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=Africa%2FCasablanca`;
+    const URL = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`;
     // console.log(URL)
     try {
         const response = await fetch(URL);
@@ -44,7 +44,7 @@ export async function obtenirMeteo(latitude, longitude) {
 
 export async function obtenirPrevisions(latitude, longitude) {
 
-    const urlPrev = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,weather_code&forecast_days=5&timezone=Africa%2FCasablanca`;
+    const urlPrev = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,weather_code&forecast_days=5&timezone=auto`;
     // console.log(urlPrev)
     try {
         const response = await fetch(urlPrev);
