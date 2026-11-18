@@ -105,7 +105,7 @@ function afficherMeteo(ville, meteo) {
 
     const titer = document.createElement("h2");
     titer.classList.add("text-2xl", "font-bold", "mb-4", "tracking-wider");
-    titer.textContent = ville + " Maroc";
+    titer.textContent = ville;
 
     const icone = document.createElement("p");
     icone.classList.add("text-5xl")
